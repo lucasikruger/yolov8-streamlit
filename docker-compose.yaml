@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  streamlit-yolov8:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: streamlit-yolov8
+    # restart: always
+    runtime: nvidia
+    shm_size: '2gb' 
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./src:/app
+    environment:
+          - NVIDIA_VISIBLE_DEVICES=all
+          - NVIDIA_DRIVER_CAPABILITIES=all
+    command: streamlit run --server.port 8501 app.py
