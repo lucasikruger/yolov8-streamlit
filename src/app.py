@@ -56,6 +56,8 @@ def main():
         # If a video file is uploaded
         elif uploaded_file.type.startswith('video/'):
             tracking = st.checkbox('Add traking')
+            if tracking:
+                trajectory = st.checkbox('Add trajectory')
             
             if st.button('Infer video'):
                 run_folder = create_run_folder('videos')
@@ -71,7 +73,7 @@ def main():
                 st.write("Original:")
                 st.video(input_path)
                 with st.spinner('Detecting...'):
-                    process_video(input_path, output_path, model, selected_classes, selected_confidence, tracking)
+                    process_video(input_path, output_path, model, selected_classes, selected_confidence, tracking, trajectory)
                     st.write("Output:")
                     st.video(output_path)
 
