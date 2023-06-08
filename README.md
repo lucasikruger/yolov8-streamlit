@@ -1,59 +1,63 @@
-# YOLOv8 Streamlit APP
+![Banner](src/logo.png)
+# Streamlit YOLOv8 App
 
-This repository contains a Streamlit application for object detection using YOLOv8. The application is capable of processing both image and video inputs. It can easily be deployed in a Docker environment.
+This project is a user-friendly web interface for the YOLOv8 model, powered by the Streamlit framework. The application allows users to perform object detection, pose estimation, and segmentation on their own images or videos using different versions of the YOLOv8 model.
 
-## Contents
-- [YOLOv8 Streamlit Object Detection App](#yolov8-streamlit-object-detection-app)
-  - [NOW ADDED POSE ESTIMATION!](#now-added-pose-estimation)
-  - [Contents](#contents)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [License](#license)
+## Features
 
-## Installation
+1. **Object Detection:** The app uses YOLOv8 models for real-time object detection. The models can identify 80 classes of common objects in various contexts.
 
-Ensure Docker is installed on your machine. Clone the repository and navigate to the project directory.
+2. **Pose Estimation:** The app uses YOLOv8 models fine-tuned for pose estimation. Currently, the 'person' class is available for pose estimation.
 
-```bash
-git clone https://github.com/username/yolov8-streamlit.git
-cd yolov8-streamlit
+3. **Segmentation:** The app can perform semantic segmentation on images using YOLOv8 models specifically trained for this task.
+
+4. **Model versions:** The app supports different versions (n, s, m, l) of the YOLOv8 model for object detection, pose estimation, and segmentation. Users can select the version based on their preference for speed vs accuracy.
+
+5. **Video Processing:** The app supports processing video files with object detection, pose estimation, and segmentation models. Users can also enable 'tracking' and 'trajectory' options to track the movement of detected objects through the video.
+
+## Prerequisites
+
+- Docker
+- Docker Compose
+- NVIDIA GPU (for optimal performance)
+
+## Getting Started
+
+1. **Clone the repo**
 ```
-
-The application can be run using Docker Compose:
-
-```bash
-docker-compose up
+git clone https://github.com/<your-repo>/streamlit-yolov8.git
 ```
+2. **Build and run the Docker image**
+```
+docker-compose up --build
+```
+3. **Access the app**
+   Open your web browser and go to `http://localhost:8501`
 
-The application will then be accessible at `http://localhost:8501`.
+## Using the App
 
-## Usage
-
-The application offers an interactive user interface to perform object detection on uploaded images and videos. Once the application is running at `http://localhost:8501`, you will find several interactive options:
-
-1. **Model Selection**: Choose the model for object detection. Currently, only 'yolov8s' is available.
-  
-2. **Class Selection**: You can select the classes you're interested in detecting. If no class is selected, all classes will be considered during detection.
-
-3. **Confidence Threshold**: A slider is available to set the minimum confidence score threshold for the object detection. You can adjust this threshold as per your requirements, with higher values being more restrictive.
-
-4. **File Upload**: You can upload either an image (jpg, jpeg, png) or video (mp4) file. Once uploaded, the file details will be displayed. 
-
-For images:
-- You can hit the 'Infer' button to start the object detection. 
-- The detected objects will be displayed alongside the original image.
-
-For videos:
-- The application will first convert the uploaded video to MP4 format using FFMPEG.
-- After conversion, you can hit the 'Infer video' button to start object detection. 
-- The application will process each frame of the video and perform object detection. 
-- Both the original and the processed videos will be displayed in the application.
-
-Remember that processing videos, especially long ones, may take a while due to the frame-by-frame object detection.
+1. **Upload your file:** The app supports images (jpg, jpeg, png) and video (mp4) files.
+2. **Select your model:** Choose between 'Object Detection', 'Pose Estimation', and 'Segmentation'.
+3. **Select your model version:** Depending on the selected model type, choose among 'n', 's', 'm', and 'l' versions.
+4. **Select classes:** If using the 'Pose Estimation' model, only the 'person' class is available. For 'Object Detection' and 'Segmentation', you can select multiple classes to detect.
+5. **Set the minimum confidence score threshold:** Adjust the slider to change the minimum confidence score for detections.
+6. **Click 'Infer':** The app will run the selected model on your uploaded file and display the results.
+   For video files, you can optionally enable 'tracking' and 'trajectory' to track the movement of detected objects through the video.
 
 ![Banner](example.png)
+## Project Structure
 
+- `app.py`: The main script to run the Streamlit app.
+- `functions.py`: Contains helper functions for the app.
+- `Dockerfile`: Used to create a Docker image of the app.
+- `docker-compose.yml`: Configuration file for Docker Compose to handle multi-container Docker applications.
 
-## License
+## Docker Deployment
 
-This project is licensed under the terms of the MIT license.
+The provided Dockerfile and docker-compose.yml are configured to use the NVIDIA Container Toolkit to take advantage of NVIDIA GPUs. The application is built and run in a Docker container, which ensures consistent and reliable execution across different platforms.
+
+## Disclaimer
+
+Please note that processing large videos or images may require significant computational resources. It is recommended to run this app on a machine with a capable GPU for optimal performance. Processing time may vary depending on the complexity of the uploaded file and the selected model/version.
+
+For any issue or suggestion, feel free to open a new issue in this repository.

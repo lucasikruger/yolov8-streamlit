@@ -19,6 +19,10 @@ COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+# Set umask
+RUN echo "umask 002" >> /etc/profile
 
+# Changing permissions of existing files
+RUN chmod -R 777 /app
 # Expose the port (change it to the appropriate port your app uses)
 EXPOSE 8501
